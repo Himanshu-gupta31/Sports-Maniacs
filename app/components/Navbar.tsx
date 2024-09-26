@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -38,13 +39,16 @@ function Navbar() {
               <SunIcon className="w-5 h-5 text-white" />
             )}
           </Button>
-
+          <Link href={"/sign-in"}>
           <Button className="bg-green-600 mr-2 text-white hover:bg-green-500 w-[4rem] ml-4">
             Sign In
           </Button>
+          </Link>
+          <Link href={"/sign-up"}>
           <Button className="bg-green-600 text-white hover:bg-green-500 w-[5rem]">
             Login
           </Button>
+          </Link>
         </div>
       </div>
     </div>
