@@ -1,47 +1,66 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
+// Define the Group interface
+interface Group {
+  id: string;
+  name: string;
+  sports: string;
+  location: string;
+}
+
 export default function HomePage() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
-  const [email,setEmail]=useState('');
+  const [email, setEmail] = useState('');
+  const [groups, setGroups] = useState<Group[]>([]); // Use the Group[] type for groups state
 
+  // Fetch groups when the component mounts
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await fetch("/api/group");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch groups: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setGroups(data.communities || []); 
+      } catch (error) {
+        console.error('An error occurred while fetching groups:', error);
+      }
+    };
+
+    fetchGroups();
+  }, []); 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        const response= await fetch("/api/user",{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-            },
-            body: JSON.stringify({ name, phone, location, email }),
-        })
-        const data=await response.json()
-        if (data.success) {
-            console.log('User registered successfully:', data)
-            
-          } else {
-            console.error('Failed to register user:', data.message)
-            
-          }
-    } catch (error) {
-        console.error('An error occurred:', error)
-    }
-    
-  }
+      const response = await fetch("/api/user", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, phone, location, email }),
+      });
 
-  const groups = [
-    { id: 1, name: 'Soccer Sundays', members: 15, location: 'Central Park' },
-    { id: 2, name: 'Basketball Nights', members: 10, location: 'Community Center' },
-    { id: 3, name: 'Tennis Club', members: 8, location: 'City Courts' },
-    { id: 4, name: 'Volleyball Beach', members: 12, location: 'Sunny Beach' },
-  ]
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('User registered successfully:', data);
+        // Reset form or perform other actions
+      } else {
+        console.error('Failed to register user:', data.message);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -80,7 +99,7 @@ export default function HomePage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="Email">Email</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   value={email}
@@ -94,22 +113,26 @@ export default function HomePage() {
           <section>
             <h2 className="text-2xl font-semibold mb-6">Available Groups</h2>
             <div className="grid gap-4">
-              {groups.map((group) => (
-                <Card key={group.id}>
-                  <CardHeader>
-                    <CardTitle>{group.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">Members: {group.members}</p>
-                    <p className="text-sm text-muted-foreground">Location: {group.location}</p>
-                    <Button className="mt-4 w-full">Join Group</Button>
-                  </CardContent>
-                </Card>
-              ))}
+              {groups.length > 0 ? (
+                groups.map((group) => (
+                  <Card key={group.id}>
+                    <CardHeader>
+                      <CardTitle>{group.name}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">Sports: {group.sports}</p>
+                      <p className="text-sm text-muted-foreground">Location: {group.location}</p>
+                      <Button className="mt-4 w-full">Join Group</Button>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <p>No groups available</p>
+              )}
             </div>
           </section>
         </div>
       </main>
     </div>
-  )
+  );
 }
