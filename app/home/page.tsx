@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 // Define the Group interface
 interface Group {
@@ -13,14 +13,23 @@ interface Group {
   sports: string;
   location: string;
 }
+interface availablelocation {
+  items: any;
+}
 
 export default function HomePage() {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [location, setLocation] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [location, setLocation] = useState("");
+  const [email, setEmail] = useState("");
   const [groups, setGroups] = useState<Group[]>([]); // Use the Group[] type for groups state
-
+  const availablelocation = [
+    "East Delhi",
+    "North Delhi",
+    "South Delhi",
+    "West Delhi",
+  ];
+  console.log(availablelocation);
   // Fetch groups when the component mounts
   useEffect(() => {
     const fetchGroups = async () => {
@@ -30,21 +39,22 @@ export default function HomePage() {
           throw new Error(`Failed to fetch groups: ${response.statusText}`);
         }
         const data = await response.json();
-        setGroups(data.communities || []); 
+        console.log(data);
+        setGroups(data.communities || []);
       } catch (error) {
-        console.error('An error occurred while fetching groups:', error);
+        console.error("An error occurred while fetching groups:", error);
       }
     };
 
     fetchGroups();
-  }, []); 
+  }, []);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await fetch("/api/user", {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, phone, location, email }),
       });
@@ -52,13 +62,13 @@ export default function HomePage() {
       const data = await response.json();
 
       if (data.success) {
-        console.log('User registered successfully:', data);
+        console.log("User registered successfully:", data);
         // Reset form or perform other actions
       } else {
-        console.error('Failed to register user:', data.message);
+        console.error("Failed to register user:", data.message);
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error("An error occurred:", error);
     }
   };
 
@@ -91,13 +101,23 @@ export default function HomePage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
-                <Input
-                  id="location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  required
-                />
+                <div className="mt-1">
+                  <select
+                    id="location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    required
+                    className="w-full bg-neutral-300 h-[3rem] rounded-lg px-4"
+                  >
+                    {availablelocation.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -107,7 +127,9 @@ export default function HomePage() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full">Join Now</Button>
+              <Button type="submit" className="w-full">
+                Join Now
+              </Button>
             </form>
           </section>
           <section>
@@ -120,8 +142,12 @@ export default function HomePage() {
                       <CardTitle>{group.name}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">Sports: {group.sports}</p>
-                      <p className="text-sm text-muted-foreground">Location: {group.location}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Sports: {group.sports}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Location: {group.location}
+                      </p>
                       <Button className="mt-4 w-full">Join Group</Button>
                     </CardContent>
                   </Card>
