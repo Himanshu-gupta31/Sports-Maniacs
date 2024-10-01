@@ -4,13 +4,16 @@ import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSession } from "@clerk/nextjs";
 
 function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  // To prevent mismatch between client and server rendering
+  const session=useSession()
+  const user=session.isSignedIn
+  console.log(user)
   useEffect(() => {
+
     setMounted(true);
   }, []);
 
@@ -49,6 +52,7 @@ function Navbar() {
             Login
           </Button>
           </Link>
+          {user}
         </div>
       </div>
     </div>

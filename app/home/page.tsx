@@ -13,23 +13,21 @@ interface Group {
   sports: string;
   location: string;
 }
-interface availablelocation {
-  items: any;
-}
 
 export default function HomePage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(""); // This will filter the groups based on location
   const [email, setEmail] = useState("");
   const [groups, setGroups] = useState<Group[]>([]); // Use the Group[] type for groups state
+
   const availablelocation = [
     "East Delhi",
     "North Delhi",
     "South Delhi",
     "West Delhi",
   ];
-  console.log(availablelocation);
+
   // Fetch groups when the component mounts
   useEffect(() => {
     const fetchGroups = async () => {
@@ -48,6 +46,7 @@ export default function HomePage() {
 
     fetchGroups();
   }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -71,6 +70,11 @@ export default function HomePage() {
       console.error("An error occurred:", error);
     }
   };
+
+  // Filter groups based on the selected location
+  const filteredGroups = location
+    ? groups.filter((group) => group.location === location)
+    : groups;
 
   return (
     <div className="min-h-screen bg-background">
@@ -107,8 +111,9 @@ export default function HomePage() {
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     required
-                    className="w-full bg-neutral-300 h-[3rem] rounded-lg px-4"
+                    className="w-full bg-neutral-300 h-[3rem] rounded-lg px-4 dark:bg-black dark:text-white"
                   >
+                    <option value="">All Locations</option>
                     {availablelocation.map((item) => (
                       <option key={item} value={item}>
                         {item}
@@ -135,8 +140,8 @@ export default function HomePage() {
           <section>
             <h2 className="text-2xl font-semibold mb-6">Available Groups</h2>
             <div className="grid gap-4">
-              {groups.length > 0 ? (
-                groups.map((group) => (
+              {filteredGroups.length > 0 ? (
+                filteredGroups.map((group) => (
                   <Card key={group.id}>
                     <CardHeader>
                       <CardTitle>{group.name}</CardTitle>
