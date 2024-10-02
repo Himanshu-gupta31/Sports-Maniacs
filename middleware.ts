@@ -10,7 +10,8 @@ const isPublicRoute = createRouteMatcher([
 const isPublicApiRoute = createRouteMatcher([
      "/api/user/:path*",
      "/api/user",
-     "/api/group"
+     "/api/group",
+     "/api/findpals"
 ])
 
 
