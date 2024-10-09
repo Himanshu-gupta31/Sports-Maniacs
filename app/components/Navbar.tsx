@@ -26,7 +26,9 @@ function Navbar() {
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <p className="mr-2">Logo</p>
-          <h1 className="font-bold text-2xl">PlayPals</h1>
+          <Link href={"/home"}>
+          <div className="font-bold text-2xl">PlayPals</div>
+          </Link>
         </div>
 
         <div className="flex items-center">

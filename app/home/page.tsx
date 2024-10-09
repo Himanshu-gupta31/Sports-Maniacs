@@ -139,10 +139,10 @@ export default function HomePage() {
           </section>
           <section>
             <h2 className="text-2xl font-semibold mb-6">Available Groups</h2>
-            <div className="grid gap-4">
+            <div className="grid gap-8">
               {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                  <Card key={group.id}>
+                  <Card key={group.id} className="shadow-green-200 shadow-xl">
                     <CardHeader>
                       <CardTitle>{group.name}</CardTitle>
                     </CardHeader>
