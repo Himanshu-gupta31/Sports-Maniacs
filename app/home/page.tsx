@@ -142,7 +142,7 @@ export default function HomePage() {
             <div className="grid gap-8">
               {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                  <Card key={group.id} className="shadow-green-200 shadow-xl">
+                  <Card key={group.id} className="shadow-green-300 shadow-xl">
                     <CardHeader>
                       <CardTitle>{group.name}</CardTitle>
                     </CardHeader>

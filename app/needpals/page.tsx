@@ -46,7 +46,7 @@ function Players() {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="border border-black p-8 rounded-lg w-[32rem] dark:border-white">
+      <div className="border border-black p-8 rounded-lg w-[32rem]  dark:border dark:border-white shadow-green-300 shadow-xl">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="location">Location</Label>
