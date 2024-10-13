@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSession } from "@clerk/nextjs";
+import { SignedOut, SignOutButton, useSession } from "@clerk/nextjs";
 
 function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -53,6 +53,9 @@ function Navbar() {
           <Button className="bg-green-600 text-white hover:bg-green-500 w-[5rem]">
             Login
           </Button>
+          {session &&
+          <SignOutButton/>
+          }
           </Link>
           {user}
         </div>
