@@ -11,6 +11,7 @@ function Players() {
   const [endingtime, setEndingtime] = useState<string>("");
   const [contact, setContact] = useState<string>("");
   const [level, setLevel] = useState<string>("");
+  const [date,setDate]=useState<string>("")
   const availablelevel = ["Beginner", "Intermediate", "Professional"];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,6 +29,7 @@ function Players() {
           numberofplayers,
           beginingtime: new Date(beginingtime),  // Convert to DateTime
           endingtime: new Date(endingtime),      // Convert to DateTime
+          date:new Date(date),
           contact,
           level:prismaLevel,
         }),
@@ -72,6 +74,16 @@ function Players() {
               id="numberofplayers"
               value={numberofplayers}
               onChange={(e) => setNumberofplayers(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="date">Date</Label>
+            <Input
+              type="date"   // Ensure the correct input type
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
               required
             />
           </div>

@@ -13,38 +13,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id  String @id @default(cuid())
-  name String 
+model User {
+  id          String   @id @default(cuid())
+  name        String
   phonenumber String
-  email  String?
-  location String
-  createdAt DateTime @default(now())
-  updatedAt DateTime  @updatedAt
+  email       String?
+  location    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-model Community{
-  id  String @id @default(cuid())
-  name String
-  sports String
-  location String
+model Community {
+  id        String   @id @default(cuid())
+  name      String
+  sports    String
+  location  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-} 
-model FindPals{
-   id String @id @default(cuid())
-   sports String
-   numberofplayers String
-   location String
-   beginingtime DateTime
-   endingtime DateTime
-   contact String
-   level Level
-   createdAt DateTime @default(now())
-   updatedAt DateTime @updatedAt
 }
-enum Level{
-BEGINNER
-INTERMEDIATE
-PROFESSIONAL
+
+model FindPals {
+  id              String   @id @default(cuid())
+  sports          String
+  numberofplayers String
+  location        String
+  beginingtime    DateTime
+  endingtime      DateTime
+  date            DateTime @default("2024-10-12T00:00:00.000Z")
+
+  contact   String
+  level     Level
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Level {
+  BEGINNER
+  INTERMEDIATE
+  PROFESSIONAL
 }

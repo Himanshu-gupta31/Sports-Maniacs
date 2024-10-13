@@ -2,8 +2,8 @@ import prisma from "@/lib/db";
 import { NextRequest,NextResponse } from "next/server";
 export async function POST(request:NextRequest) {
     try {
-        const {location,sports,numberofplayers,beginingtime,contact,level,endingtime}=await request.json()
-        if(!location || !sports || !numberofplayers || !beginingtime || !contact || !level ||!endingtime){
+        const {location,sports,numberofplayers,beginingtime,contact,level,endingtime,date}=await request.json()
+        if(!location || !sports || !numberofplayers || !beginingtime || !contact || !level ||!endingtime || !date){
             return NextResponse.json({message:"All Fields are required"})
         }
         const details=await prisma.findPals.create({
@@ -14,7 +14,8 @@ export async function POST(request:NextRequest) {
                 beginingtime:beginingtime,
                 endingtime:endingtime,
                 contact:contact,
-                level:level
+                level:level,
+                date:date
             }
         });
         return NextResponse.json({success:true,message:"Details succesfully registered",data:details},{status:200})
