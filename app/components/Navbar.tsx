@@ -12,6 +12,7 @@ function Navbar() {
   const session=useSession()
   const user=session.isSignedIn
   console.log(user)
+
   useEffect(() => {
 
     setMounted(true);
@@ -53,7 +54,7 @@ function Navbar() {
           <Button className="bg-green-600 text-white hover:bg-green-500 w-[5rem]">
             Login
           </Button>
-          {session &&
+          {session && session.isSignedIn && 
           <SignOutButton/>
           }
           </Link>
