@@ -12,6 +12,7 @@ interface Group {
   name: string;
   sports: string;
   location: string;
+  grouplink:string
 }
 
 export default function HomePage() {
@@ -153,7 +154,9 @@ export default function HomePage() {
                       <p className="text-sm text-muted-foreground">
                         Location: {group.location}
                       </p>
-                      <Button className="mt-4 w-full">Join Group</Button>
+                      <Button className="mt-4 w-full" onClick={()=>window.open(group.grouplink)}>
+                        Join Group
+                        </Button>
                     </CardContent>
                   </Card>
                 ))

@@ -29,6 +29,7 @@ model Community {
   name      String
   sports    String
   location  String
+  grouplink String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
