@@ -1,14 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 
+// Extend the NodeJS global type
+declare global {
+  var __prisma: PrismaClient | undefined;
+}
+
 let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === "production") {
   prisma = new PrismaClient();
 } else {
-  if (!(global as any).__prisma) {
-    (global as any).__prisma = new PrismaClient();
+  if (!global.__prisma) {
+    global.__prisma = new PrismaClient();
   }
-  prisma = (global as any).__prisma;
+  prisma = global.__prisma;
 }
 
 export default prisma;
