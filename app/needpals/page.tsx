@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/router";
 
 function Players() {
   const [location, setLocation] = useState<string>("");
@@ -13,6 +14,7 @@ function Players() {
   const [level, setLevel] = useState<string>("");
   const [date,setDate]=useState<string>("")
   const availablelevel = ["Beginner", "Intermediate", "Professional"];
+  const router=useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +38,9 @@ function Players() {
       });
       const data = await response.json();
       if (data.success) {
+        
         console.log("Details successfully registered:", data);
+        router.push("/connectwithpals")
         // Reset form or perform other actions
       } else {
         console.error("Failed to register details:", data.message);
