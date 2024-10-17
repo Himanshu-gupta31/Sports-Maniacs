@@ -64,12 +64,19 @@ export async function POST(request: NextRequest) {
       { success: true, message: "Details successfully registered", data: details },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error registering Details", error);
+  } catch (error: unknown) {
+    console.error("Error registering details:", error);
 
-    // Error response with error details
+    // Type guard to check if error is an instance of Error
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { success: false, message: "Error registering details", error: error.message },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
-      { success: false, message: "Error registering details", error: error.message },
+      { success: false, message: "An unknown error occurred" },
       { status: 500 }
     );
   }
