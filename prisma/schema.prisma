@@ -41,8 +41,7 @@ model FindPals {
   location        String
   beginingtime    DateTime
   endingtime      DateTime
-  date            DateTime @default("2024-10-12T00:00:00.000Z")
-
+  date            DateTime @default(now())
   contact   String
   level     Level
   createdAt DateTime @default(now())
