@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { SignedIn, SignedOut, SignOutButton, useSession } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignOutButton } from "@clerk/nextjs";
 import { Trophy } from "lucide-react";
 
 function Navbar() {
