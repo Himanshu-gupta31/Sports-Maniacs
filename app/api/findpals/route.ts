@@ -1,5 +1,5 @@
-import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,13 +48,13 @@ export async function POST(request: NextRequest) {
     // Create new FindPals entry
     const details = await prisma.findPals.create({
       data: {
-        location: location,
-        numberofplayers: numberofplayers,
-        sports: sports,
-        beginingtime: parsedBeginingTime,
-        endingtime: parsedEndingTime,
-        contact: contact,
-        level: level, // Enum value
+        location,
+        numberofplayers:numberofplayers,
+        sports,
+        beginingtime:parsedBeginingTime,
+        endingtime:parsedEndingTime,
+        contact,
+        level: level ,
         date: parsedDate,
       },
     });
