@@ -10,7 +10,6 @@ import { Trophy } from "lucide-react";
 function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const { session } = useSession();
 
   useEffect(() => {
     setMounted(true);

@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
-import { NextRequest,NextResponse } from "next/server";
-export async function GET(request:NextRequest) {
+import { NextResponse } from "next/server";
+export async function GET() {
     try {
         const getallcard=await prisma.findPals.findMany()
         return NextResponse.json({success:true,message:"All Card Details Fetched Successfully",getallcard},{status:200})
