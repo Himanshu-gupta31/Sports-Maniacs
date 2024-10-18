@@ -62,7 +62,7 @@ function Navbar() {
           
           <SignedIn>
             <Link href={"/needpals"}>
-            <p className="bg-green-400 p-2 rounded-lg ml-4 hover:bg-green-500">Need With Pals</p>
+            <p className="bg-green-400 p-2 rounded-lg ml-4 hover:bg-green-500">Need Pals</p>
             </Link>
             <Link href={"/connectwithpals"}>
             <p className="bg-green-400 p-2 rounded-lg ml-4 hover:bg-green-500">Connect With Pals</p>

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { MapPin, Users, Clock, Phone, Award, CalendarDays } from "lucide-react";
+import { MapPin, Users, Clock, Phone, Award, CalendarDays, Bike } from "lucide-react";
 
 interface Card {
   location: string;
@@ -58,17 +57,16 @@ export default function Connectwithpals() {
                       {item.location}
                     </h3>
                   </div>
-                  <Image
-                    src={
-                      sportIcons[item.sports.toLowerCase()] ||
-                      "/sports-icons/default.svg"
-                    }
-                    alt={item.sports}
-                    width={40}
-                    height={40}
-                    className="rounded-full bg-gray-200 p-1"
-                  />
                 </div>
+                  <div className="space-y-2">
+                  <p className="flex items-center text-gray-600 dark:text-gray-300 mb-2">
+                    <Bike className="w-4 h-4 mr-2 text-neutral-500" />
+                    <span className="font-medium">
+                      {item.sports}
+                    </span>{" "}
+                    
+                  </p>
+                  </div>
                 <div className="space-y-2">
                   <p className="flex items-center text-gray-600 dark:text-gray-300">
                     <Users className="w-4 h-4 mr-2 text-green-500" />
