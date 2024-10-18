@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/router";
@@ -12,13 +12,13 @@ function Players() {
   const [endingtime, setEndingtime] = useState<string>("");
   const [contact, setContact] = useState<string>("");
   const [level, setLevel] = useState<string>("");
-  const [date,setDate]=useState<string>("")
+  const [date, setDate] = useState<string>("");
   const availablelevel = ["Beginner", "Intermediate", "Professional"];
-  const router=useRouter();
-
+  const router = useRouter();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const prismaLevel = level.toUpperCase()
+    const prismaLevel = level.toUpperCase();
     try {
       const response = await fetch("/api/findpals", {
         method: "POST",
@@ -31,17 +31,18 @@ function Players() {
           numberofplayers,
           beginingtime: new Date(beginingtime),  // Convert to DateTime
           endingtime: new Date(endingtime),      // Convert to DateTime
-          date:new Date(date),
+          date: new Date(date),
           contact,
-          level:prismaLevel,
+          level: prismaLevel,
         }),
       });
       const data = await response.json();
       if (data.success) {
-        
         console.log("Details successfully registered:", data);
-        router.push("/connectwithpals")
-        // Reset form or perform other actions
+        // Ensure that router is only pushed after the client is mounted
+        if (typeof window !== "undefined") {
+          router.push("/connectwithpals");
+        }
       } else {
         console.error("Failed to register details:", data.message);
       }

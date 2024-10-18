@@ -26,9 +26,9 @@ function Navbar() {
           <p className="mr-2">
             <Trophy />
           </p>
-          <Link href={"/home"}>
+          
             <div className="font-bold text-2xl">PlayPals</div>
-          </Link>
+          
         </div>
 
         <div className="flex items-center">

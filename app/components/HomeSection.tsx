@@ -15,9 +15,11 @@ function HomeSection() {
           <p className='font-semibold text-2xl mb-4 text-gray-700 dark:text-gray-300'>
             Bring Your Game, We Bring the Players
           </p>
+          <Link href={"/sign-in"}>
           <Button className='bg-gray-800 text-white hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600 '>
             Get Started
           </Button>
+          </Link>
         </div>
         <div></div>
       </div>
