@@ -14,13 +14,7 @@ interface Card {
   date: Date;
 }
 
-const sportIcons: { [key: string]: string } = {
-  football: "/sports-icons/football.svg",
-  basketball: "/sports-icons/basketball.svg",
-  tennis: "/sports-icons/tennis.svg",
-  volleyball: "/sports-icons/volleyball.svg",
-  // Add more sports and their corresponding icon paths
-};
+
 
 export default function Connectwithpals() {
   const [connectcard, setConnectcard] = useState<Card[]>([]);
