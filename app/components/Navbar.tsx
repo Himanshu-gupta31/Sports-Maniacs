@@ -1,82 +1,116 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
-import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { SignedIn, SignedOut, SignOutButton } from "@clerk/nextjs";
-import { Trophy } from "lucide-react";
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { useTheme } from "next-themes"
+import { SunIcon, MoonIcon } from "@radix-ui/react-icons"
+import React, { useEffect, useState } from "react"
+import Link from "next/link"
+import { SignedIn, SignedOut, SignOutButton } from "@clerk/nextjs"
+import { Trophy, Menu } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function Navbar() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   if (!mounted) {
-    return null; // Do not render until mounted to avoid hydration issues
+    return null
   }
 
   return (
-    <div className="border border-gray-400 w-full h-[4rem] p-4 px-6 dark:bg-white dark:text-black">
+    <div className="border-b border-gray-200 w-full p-4 dark:bg-gray-800 dark:text-white">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <p className="mr-2">
-            <Trophy />
-          </p>
-          
-            <div className="font-bold text-2xl">PlayPals</div>
-          
+          <Trophy className="mr-2" />
+          <div className="font-bold text-xl sm:text-2xl">PlayPals</div>
         </div>
 
         <div className="flex items-center">
-          {/* Theme toggle button */}
           <Button
             variant="outline"
             size="icon"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="mr-2"
           >
             {theme === "light" ? (
-              <MoonIcon className="w-5 h-5" />
+              <MoonIcon className="w-4 h-4" />
             ) : (
-              <SunIcon className="w-5 h-5 text-white" />
+              <SunIcon className="w-4 h-4" />
             )}
           </Button>
 
-          
-          <SignedOut>
-            <Link href={"/sign-in"}>
-              <Button className="bg-green-600 mr-2 text-white hover:bg-green-500 w-[4rem] ml-4">
-                Sign In
-              </Button>
-            </Link>
-            <Link href={"/sign-up"}>
-              <Button className="bg-green-600 text-white hover:bg-green-500 w-[5rem]">
-                Sign Up
-              </Button>
-            </Link>
-          </SignedOut>
+          <div className="hidden sm:flex items-center space-x-2">
+            <SignedOut>
+              <Link href="/sign-in">
+                <Button className="bg-green-600 text-white hover:bg-green-500">
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/sign-up">
+                <Button className="bg-green-600 text-white hover:bg-green-500">
+                  Sign Up
+                </Button>
+              </Link>
+            </SignedOut>
 
-          
-          <SignedIn>
-            <Link href={"/needpals"}>
-            <p className="bg-green-400 p-2 rounded-lg ml-4 hover:bg-green-500">Need Pals</p>
-            </Link>
-            <Link href={"/connectwithpals"}>
-            <p className="bg-green-400 p-2 rounded-lg ml-4 hover:bg-green-500">Connect With Pals</p>
-            </Link>
-            <SignOutButton>
-              <Button className="bg-red-600 text-white hover:bg-red-500 w-[5rem] ml-4">
-                Sign Out
-              </Button>
-            </SignOutButton>
-          </SignedIn>
+            <SignedIn>
+              <Link href="/needpals">
+                <Button className="bg-green-400 hover:bg-green-500">Need Pals</Button>
+              </Link>
+              <Link href="/connectwithpals">
+                <Button className="bg-green-400 hover:bg-green-500">Connect With Pals</Button>
+              </Link>
+              <SignOutButton>
+                <Button className="bg-red-600 text-white hover:bg-red-500">
+                  Sign Out
+                </Button>
+              </SignOutButton>
+            </SignedIn>
+          </div>
+
+          <div className="sm:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <SignedOut>
+                  <DropdownMenuItem>
+                    <Link href="/sign-in">Sign In</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/sign-up">Sign Up</Link>
+                  </DropdownMenuItem>
+                </SignedOut>
+                <SignedIn>
+                  <DropdownMenuItem>
+                    <Link href="/needpals">Need Pals</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/connectwithpals">Connect With Pals</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <SignOutButton>Sign Out</SignOutButton>
+                  </DropdownMenuItem>
+                </SignedIn>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

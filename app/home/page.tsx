@@ -1,55 +1,48 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
 
-// Define the Group interface
 interface Group {
-  id: string;
-  name: string;
-  sports: string;
-  location: string;
-  grouplink:string
+  id: string
+  name: string
+  sports: string
+  location: string
+  grouplink: string
 }
 
 export default function HomePage() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [location, setLocation] = useState(""); // This will filter the groups based on location
-  const [email, setEmail] = useState("");
-  const [groups, setGroups] = useState<Group[]>([]); // Use the Group[] type for groups state
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [location, setLocation] = useState("")
+  const [email, setEmail] = useState("")
+  const [groups, setGroups] = useState<Group[]>([])
 
-  const availablelocation = [
-    "East Delhi",
-    "North Delhi",
-    "South Delhi",
-    "West Delhi",
-  ];
+  const availablelocation = ["East Delhi", "North Delhi", "South Delhi", "West Delhi"]
 
-  // Fetch groups when the component mounts
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await fetch("/api/group");
+        const response = await fetch("/api/group")
         if (!response.ok) {
-          throw new Error(`Failed to fetch groups: ${response.statusText}`);
+          throw new Error(`Failed to fetch groups: ${response.statusText}`)
         }
-        const data = await response.json();
-        console.log(data);
-        setGroups(data.communities || []);
+        const data = await response.json()
+        console.log(data)
+        setGroups(data.communities || [])
       } catch (error) {
-        console.error("An error occurred while fetching groups:", error);
+        console.error("An error occurred while fetching groups:", error)
       }
-    };
+    }
 
-    fetchGroups();
-  }, []);
+    fetchGroups()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch("/api/user", {
         method: "POST",
@@ -57,33 +50,30 @@ export default function HomePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, phone, location, email }),
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (data.success) {
-        console.log("User registered successfully:", data);
+        console.log("User registered successfully:", data)
         // Reset form or perform other actions
       } else {
-        console.error("Failed to register user:", data.message);
+        console.error("Failed to register user:", data.message)
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      console.error("An error occurred:", error)
     }
-  };
+  }
 
-  // Filter groups based on the selected location
-  const filteredGroups = location
-    ? groups.filter((group) => group.location === location)
-    : groups;
+  const filteredGroups = location ? groups.filter((group) => group.location === location) : groups
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="container mx-auto p-4 md:p-8">
-        <h1 className="text-4xl font-bold text-center mb-8">Sports Connect</h1>
+      <main className="container mx-auto px-4 py-8 md:px-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">Sports Connect</h1>
         <div className="grid md:grid-cols-2 gap-8">
           <section className="space-y-6">
-            <h2 className="text-2xl font-semibold">Join the Community</h2>
+            <h2 className="text-xl md:text-2xl font-semibold">Join the Community</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
@@ -106,28 +96,26 @@ export default function HomePage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
-                <div className="mt-1">
-                  <select
-                    id="location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    required
-                    className="w-full bg-neutral-300 h-[3rem] rounded-lg px-4 dark:bg-black dark:text-white"
-                  >
-                    <option value="">All Locations</option>
-                    {availablelocation.map((item) => (
-                      <option key={item} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <select
+                  id="location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  required
+                  className="w-full bg-background border border-input h-10 rounded-md px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <option value="">All Locations</option>
+                  {availablelocation.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -139,13 +127,13 @@ export default function HomePage() {
             </form>
           </section>
           <section>
-            <h2 className="text-2xl font-semibold mb-6">Available Groups</h2>
-            <div className="grid gap-8">
+            <h2 className="text-xl md:text-2xl font-semibold mb-6">Available Groups</h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
               {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                  <Card key={group.id} className="shadow-green-300 shadow-xl">
+                  <Card key={group.id} className="shadow-md hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
-                      <CardTitle>{group.name}</CardTitle>
+                      <CardTitle className="text-lg md:text-xl">{group.name}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-muted-foreground">
@@ -154,19 +142,19 @@ export default function HomePage() {
                       <p className="text-sm text-muted-foreground">
                         Location: {group.location}
                       </p>
-                      <Button className="mt-4 w-full" onClick={()=>window.open(group.grouplink)}>
+                      <Button className="mt-4 w-full" onClick={() => window.open(group.grouplink)}>
                         Join Group
-                        </Button>
+                      </Button>
                     </CardContent>
                   </Card>
                 ))
               ) : (
-                <p>No groups available</p>
+                <p className="text-center col-span-full">No groups available</p>
               )}
             </div>
           </section>
         </div>
       </main>
     </div>
-  );
+  )
 }
