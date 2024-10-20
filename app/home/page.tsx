@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import Link from "next/link"
 
 interface Group {
   id: string
@@ -75,25 +76,7 @@ export default function HomePage() {
           <section className="space-y-6">
             <h2 className="text-xl md:text-2xl font-semibold">Join the Community</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                />
-              </div>
+              
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
                 <select
@@ -112,18 +95,12 @@ export default function HomePage() {
                 </select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
+              <Link href={"https://chat.whatsapp.com/Lw0u7DsUAoWHn5PU8yHGGo"}>
               <Button type="submit" className="w-full">
                 Join Now
               </Button>
+              </Link>
+              </div>
             </form>
           </section>
           <section>
