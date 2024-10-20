@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
@@ -16,10 +15,8 @@ interface Group {
 }
 
 export default function HomePage() {
-  const [name, setName] = useState("")
-  const [phone, setPhone] = useState("")
+
   const [location, setLocation] = useState("")
-  const [email, setEmail] = useState("")
   const [groups, setGroups] = useState<Group[]>([])
 
   const availablelocation = ["East Delhi", "North Delhi", "South Delhi", "West Delhi"]
@@ -50,7 +47,7 @@ export default function HomePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, phone, location, email }),
+        body: JSON.stringify({ location }),
       })
 
       const data = await response.json()
